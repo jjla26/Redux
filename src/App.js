@@ -1,28 +1,48 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
+import { incrementar, decrementar, setear } from './reducers'
 import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+
+  handleSetear = e => {
+    const { valor } = this.state
+    const { setear } = this.props
+    setear(valor)
+
+  }
+
+  handleChange = e => {
+    const { name, value } = e.target
+    this.setState({ [name]: value })
+  }
+
   render() {
+    console.log(this.state)
+    const { incrementar, decrementar, valor } = this.props
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <p>{valor}</p>
+        <button onClick={incrementar}>Incrementar</button>
+        <button onClick={decrementar}>Decrementar</button>
+        <input name="valor" onChange={this.handleChange}/>
+        <button onClick={this.handleSetear}>Setear</button>
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    valor: state
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  incrementar: () => dispatch(incrementar()),
+  decrementar: () => dispatch(decrementar()),
+  setear: payload => dispatch(setear(payload))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

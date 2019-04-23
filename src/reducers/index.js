@@ -3,17 +3,17 @@ const DECREMENTAR = 'CONTADOR/DECREMENTAR'
 const SETEAR = 'CONTADOR/SETEAR'
 
 
-const incrementar = () => ({
+export const incrementar = () => ({
     type: INCREMENTAR,
 
 })
 
-const decrementar = () => ({
+export const decrementar = () => ({
     type: DECREMENTAR,
     
 })
 
-const setear = payload => ({
+export const setear = payload => ({
     type: SETEAR,
     payload
     
@@ -30,11 +30,11 @@ export default function (state = initialState, action){
             return state + 1
 
         case DECREMENTAR:
-            return state-1
+            return state - 1
 
         case SETEAR:
             return action.payload
-        default:
+        default: 
             return state
 
     }
